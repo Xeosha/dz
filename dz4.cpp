@@ -26,6 +26,7 @@ int main()
 			if (isNegative(matrix, n, i))
 			{
 				moveRow(matrix, i, m, n);
+				j = 0;
 			}
 		}
 	}
@@ -37,6 +38,7 @@ int main()
 
 int** newMatrix(const int m, const int n)
 {
+	srand(time(0));
 	int** matrix = new int* [m];
 	for (int i = 0; i < m; i++)
 	{
