@@ -1,50 +1,11 @@
 #include <iostream>
 using namespace std;
 
-int** newMatrix(const int n)
-{
-	int** matrix = new int* [n];
-	for (int i = 0; i < n; i++)
-	{
-		matrix[i] = new int[n];
-		for (int j = 0; j < n; j++)
-		{
-			matrix[i][j] = -3 + rand() % 12;
-		}
-	}
-	return matrix;
-}
-
-void deleteMatrix(int** matrix, const int n)
-{
-	for (int i = 0; i < n; i++)
-	{
-		delete[] matrix[i];
-	}
-	delete[] matrix;
-}
-
-void showMatrix(int** matrix, const int n)
-{
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			cout << matrix[i][j] << '\t';
-		}
-		cout << endl;
-	}
-	cout << endl;
-}
-
-bool isNegative(int** matrix, int row_index, int m) 
-{
-	for (int j = 0; j < m; ++j)
-		if (matrix[row_index][j] < 0)
-			return true;
-	return false;
-}
-int** moveRow(int **matrix, )
+int** newMatrix(const int m, const int n);
+void deleteMatrix(int** matrix, const int m);
+void showMatrix(int** matrix, const int m, const int n);
+bool isNegative(int** matrix, const int n, int row_index);
+void moveRow(int** matrix, int row_index, const int m, const int n);
 
 int main()
 {
@@ -56,22 +17,85 @@ int main()
 	cout << "Введите кол-во столбцов: ";
 	cin >> n;
 
-
-	for (int i = 0; i < n; i++)
+	int** matrix = newMatrix(m, n);
+	showMatrix(matrix, m, n);
+	for (int i = 0; i < m; i++)
 	{
-		int** matrix = newMatrix(m);
-		for (int i = 0; i < m; i++)
+		for (int j = 0; j < n; j++)
 		{
-			for (int j = 0; j < n; j++)
+			if (isNegative(matrix, n, i))
 			{
-				if (isNegative(matrix, i, m))
-				{
-					moveRow();
-				}
+				moveRow(matrix, i, m, n);
 			}
 		}
 	}
-
+	showMatrix(matrix, m, n);
+	deleteMatrix(matrix, m);
 	system("pause");
 	return 0;
+}
+
+int** newMatrix(const int m, const int n)
+{
+	int** matrix = new int* [m];
+	for (int i = 0; i < m; i++)
+	{
+		matrix[i] = new int[n];
+		for (int j = 0; j < n; j++)
+		{
+			matrix[i][j] = -3 + rand() % 12;
+		}
+	}
+	return matrix;
+}
+
+void deleteMatrix(int** matrix, const int m)
+{
+	for (int i = 0; i < m; i++)
+	{
+		delete[] matrix[i];
+	}
+	delete[] matrix;
+}
+
+void showMatrix(int** matrix, const int m, const int n)
+{
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			cout << matrix[i][j] << '\t';
+		}
+		cout << endl;
+	}
+	cout << endl;
+}
+
+bool isNegative(int** matrix, const int n, int row_index)
+{
+	for (int j = 0; j < n; ++j)
+		if (matrix[row_index][j] < 0)
+			return true;
+	return false;
+}
+void moveRow(int** matrix, int row_index, const int m, const int n)
+{
+	int temp;
+	for (int j = 0; j < n; j++)
+	{
+		matrix[row_index][j] = 0;
+	}
+	if (row_index == m - 1) { return; }
+
+	for (int i = row_index; i < m - 1; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			temp = matrix[i][j];
+			matrix[i][j] = matrix[i + 1][j];
+			matrix[i + 1][j] = temp;
+		}
+	}
+
+
 }
