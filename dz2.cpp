@@ -36,7 +36,7 @@ int** newTransposeMatrix(int** matrix, const int n)
 	{
 		for (int j = 0; j < n; j++)
 		{
-			transp_matrix[i][j] = matrix[n-j-1][i];
+			transp_matrix[i][j] = matrix[n - j - 1][i];
 		}
 	}
 	return transp_matrix;
@@ -54,6 +54,20 @@ void showMatrix(int** matrix, const int n)
 	}
 }
 
+bool isSymmetry(int** matrix1, int** matrix2, const int n)
+{
+	bool flag = 1;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if (matrix1[i][j] != matrix2[i][j])
+				return false;
+		}
+	}
+	return true;
+}
+
 int main()
 {
 	setlocale(LC_ALL, "Rus");
@@ -61,13 +75,18 @@ int main()
 
 	cout << "Введите размер квадратной матрицы: ";
 	cin >> n;
-	
+
 	int** matrix = newMatrix(n);
 	int** transpose_matrix = newTransposeMatrix(matrix, n);
 	showMatrix(matrix, n);
 	cout << endl;
 	showMatrix(transpose_matrix, n);
 
+	if (isSymmetry(matrix, transpose_matrix, n))
+	{
+		cout << "Матрицы симметричны" << endl;
+	}
+	else cout << "Матрицы не симметричны" << endl;
 	deleteMatrix(matrix, n);
 	deleteMatrix(transpose_matrix, n);
 
