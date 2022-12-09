@@ -11,12 +11,13 @@ char** createListWords(char* row)
 		words[i] = new char[255];
 	}
 
+	char pre_letter;
 	char letter;
 	int i = 0, j = 0;
 	while (*row != '\0')
 	{
 		letter = *row;
-		if (letter == ' ')
+		if (letter == ' ' and pre_letter != ' ')
 		{
 			words[i][j] = '\0';
 			j = 0;
@@ -28,6 +29,7 @@ char** createListWords(char* row)
 			++j;
 		}
 		++row;
+		pre_letter = letter;
 	}
 	words[i][j] = '\0';
 	return words;
@@ -59,7 +61,7 @@ void toCrossvord(char* row)
 	int length2 = strlen(str2);
 
 	//Вывод вариантов кроссворда на экран:
-	int k = 0;
+	bool flag = 0;
 	for (int i = 0; i < length1; i++)
 	{
 		for (int j = 0; j < length2; j++)
@@ -76,10 +78,10 @@ void toCrossvord(char* row)
 					cout << endl;
 				}
 				cout << endl;
-				k += 1;
+				flag = 1;
 			}
 	}
-	if (k == 0) cout << "В ввденых словах нет ни одной одинаковой буквы";
+	if (flag == 0) cout << "В ввденых словах нет ни одной одинаковой буквы";
 
 	//Удаление массива слов:
 	deleteListWords(words);
