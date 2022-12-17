@@ -87,8 +87,22 @@ int main()
 
 	if (function(a) * function(b) < 0)
 	{
-		cout << "Метод половинного деления: " << half_division(a, b, countB) << " за кол-во итераций: " << countB << endl;
-		cout << "Метод Ньютона: " << Newton(a, b, countC) << " за кол-во итераций: " << countC << endl;
+		bool flag = 1;
+		double i = a + 0.01;
+		double temp1 = der1(a);
+		double temp2 = der2(a);
+		while (i < b)
+		{
+			if (temp1 * der1(i) <= 0 || temp2 * der2(i) <= 0)
+				flag = 0;
+			i += 0.01;
+		}
+		if (flag)
+		{
+			cout << "Метод половинного деления: " << half_division(a, b, countB) << " за кол-во итераций: " << countB << endl;
+			cout << "Метод Ньютона: " << Newton(a, b, countC) << " за кол-во итераций: " << countC << endl;
+		}
+		else cout << "Нельзя решить методами половинного деления и Ньютона на данном интервале!" << endl;
 		cout << "Метод итераций: " << iterations(a, b, countA) << " за кол-во итераций: " << countA << endl;
 	}
 	else
